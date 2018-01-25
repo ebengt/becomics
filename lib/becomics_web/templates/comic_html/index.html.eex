@@ -1,0 +1,5 @@
+<div class="jumbotron">
+	<%= for c <- @comics do %>
+		<%= render "name_url.html", c: c %>
+	<% end %>
+</div>

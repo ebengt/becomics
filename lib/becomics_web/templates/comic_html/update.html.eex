@@ -1,0 +1,4 @@
+<div class="jumbotron">
+	comic updated
+	<%= @comic.name %>
+</div>

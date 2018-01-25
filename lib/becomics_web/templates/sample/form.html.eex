@@ -1,0 +1,9 @@
+<%= form_for @conn, comic_html_path(@conn, :update, @comic.id), fn f -> %>
+  <%= render "error.html", f: f %>
+
+  <div class="form-group">
+    <label><%= @comic.url %></label>
+    <%= text_input f, :url, class: "form-control" %>
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

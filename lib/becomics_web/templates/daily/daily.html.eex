@@ -1,0 +1,21 @@
+<div class="jumbotron">
+	<br>
+		Comics for this day from 'config :becomics, daily_controller: <%= Kernel.inspect (Application.get_env :becomics, :daily_controller) %>
+	</br>
+	<%= for c <- @comics do %>
+		<%= render "name_url.html", c: c %>
+	<% end %>
+</div>
+<div class="jumbotron">
+	<br>
+		Comics sampled from 'config :becomics, sample_controller: <%= Kernel.inspect (Application.get_env :becomics, :sample_controller) %>
+	</br>
+	<%= for c <- @samples do %>
+		<%= render "name_url_br.html", c: c %>
+	<% end %>
+</div>
+Updates to samples
+<%= for c <- @samples do %>
+	<%= render "form.html", conn: 
+	@conn, comic: c %>
+<% end %>
