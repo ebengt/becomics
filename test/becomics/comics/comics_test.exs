@@ -44,6 +44,12 @@ defmodule Becomics.ComicsTest do
       assert {:error, %Ecto.Changeset{}} = Comics.create_comic(@invalid_attrs_url)
     end
 
+    test "create_comic/1 with same data returns error changeset" do
+      comic = comic_fixture()
+      assert {:error, %Ecto.Changeset{}} = Comics.create_comic(@valid_attrs)
+      assert comic == Comics.get_comic!(comic.id)
+    end
+
     test "update_comic/2 with valid data updates the comic" do
       comic = comic_fixture()
       assert {:ok, comic} = Comics.update_comic(comic, @update_attrs)
@@ -103,6 +109,15 @@ defmodule Becomics.ComicsTest do
 
     test "create_publish/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Comics.create_publish(@invalid_attrs)
+    end
+
+	# Ecto.Changeset.unique_constraint/1 is working on comic_id,
+	# which I have not yet managed to include in the tests.
+	@tag :skip
+    test "create_publish/1 with same data returns error changeset" do
+      publish = publish_fixture()
+      assert {:error, %Ecto.Changeset{}} = Comics.create_publish(@valid_attrs)
+      assert publish == Comics.get_publish!(publish.id)
     end
 
     test "update_publish/2 with valid data updates the publish" do

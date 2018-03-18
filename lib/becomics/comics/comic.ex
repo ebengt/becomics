@@ -20,7 +20,8 @@ defmodule Becomics.Comics.Comic do
     |> Ecto.Changeset.validate_required([:name, :url])
     |> Ecto.Changeset.validate_length(:name, min: 2)
     |> Ecto.Changeset.validate_length(:url, min: 12)
-    |> validate_start_with_http(:url, attrs[:url]) # do not use attrs.url since :url might be missing
+    |> Ecto.Changeset.unique_constraint(:name)
+    |> validate_start_with_http(:url, attrs[:url]) # do not use attrs.url since :url might be missing (weird since it is required)
   end
 
 

@@ -18,5 +18,6 @@ defmodule Becomics.Comics.Publish do
     publish
     |> cast(attrs, [:day, :comic_id])
     |> validate_required([:day])
+    |> Ecto.Changeset.unique_constraint(:comic_id_day)
   end
 end
