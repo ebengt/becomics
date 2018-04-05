@@ -1,6 +1,6 @@
 <div class="jumbotron">
 	<br>
-		Comics for this day from 'config :becomics, daily_controller: <%= Kernel.inspect (Application.get_env :becomics, :daily_controller) %>
+		Comics for this day from 'config :becomics, daily_controller: <%= Kernel.inspect (Application.get_env :becomics, :daily_controller) %>'
 	</br>
 	<%= for c <- @comics do %>
 		<%= render "name_url.html", c: c %>
@@ -8,7 +8,7 @@
 </div>
 <div class="jumbotron">
 	<br>
-		Comics sampled from 'config :becomics, sample_controller: <%= Kernel.inspect (Application.get_env :becomics, :sample_controller) %>
+		Comics sampled from 'config :becomics, sample_controller: <%= Kernel.inspect (Application.get_env :becomics, :sample_controller) %>' with overlap from 'config :becomics, sample_controller_overlap: <%= Kernel.inspect (Application.get_env :becomics, :sample_controller_overlap) %>'
 	</br>
 	<%= for c <- @samples do %>
 		<%= render "name_url_br.html", c: c %>
