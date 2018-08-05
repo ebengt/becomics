@@ -11,10 +11,10 @@
 		Comics sampled from 'config :becomics, sample_controller: <%= Kernel.inspect (Application.get_env :becomics, :sample_controller) %>' with overlap from 'config :becomics, sample_controller_overlap: <%= Kernel.inspect (Application.get_env :becomics, :sample_controller_overlap) %>'
 	</br>
 	<%= for c <- @samples do %>
-		<%= render "name_url_br.html", c: c %>
+		<%= render "name_url.html", c: c %>
 	<% end %>
 </div>
-Updates to samples
+Submit new links
 <%= for c <- @samples do %>
 	<%= render "form.html", conn: 
 	@conn, comic: c %>
