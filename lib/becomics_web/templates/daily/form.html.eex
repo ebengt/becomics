@@ -3,7 +3,7 @@
 
   <div class="form-group">
     <label><%= @comic.name %></label>
-    <%= text_input f, :url, class: "form-control" %>
+    <%= text_input f, :url, class: "form-control", autocomplete: "off" %>
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
