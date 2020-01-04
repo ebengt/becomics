@@ -11,5 +11,12 @@ defmodule Becomics.MoreTest do
 			c = Enum.at cs, 0
 			assert c === comic
 		end
+
+		test "like/2" do
+			{:ok, comic} = Becomics.Comics.create_comic %{name: "asd kalle 123", url: "http://like.com"}
+			q = from p in Becomics.Comics.Comic, where: like(p.name, "%kalle%")
+			[c] = Repo.all(q)
+			assert c === comic
+		end
 	end
 end

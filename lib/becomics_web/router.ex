@@ -23,6 +23,7 @@ defmodule BecomicsWeb.Router do
     post "/comics/:id", ComicHTMLController, :update
     get "/daily", DailyController, :daily
     #get "/sample/:date", SampleController, :sample
+    get "/like/:like", LikeController, :like
   end
 
   # Other scopes may use custom stacks.
