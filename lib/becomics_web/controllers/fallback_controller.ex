@@ -9,7 +9,8 @@ defmodule BecomicsWeb.FallbackController do
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> render(BecomicsWeb.ChangesetView, "error.json", changeset: changeset)
+    |> put_view(BecomicsWeb.ChangesetView)
+    |> render("error.json", changeset: changeset)
   end
 
   def call(conn, {:error, :not_found}) do

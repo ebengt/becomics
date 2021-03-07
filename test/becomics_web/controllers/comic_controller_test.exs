@@ -20,17 +20,17 @@ defmodule BecomicsWeb.ComicControllerTest do
 
   describe "index" do
     test "lists all comics", %{conn: conn} do
-      conn = get conn, comic_path(conn, :index)
+      conn = get conn, Routes.comic_path(conn, :index)
       assert json_response(conn, 200)["data"] == []
     end
   end
 
   describe "create comic" do
     test "renders comic when data is valid", %{conn: conn} do
-      conn = post conn, comic_path(conn, :create), comic: @create_attrs
+      conn = post conn, Routes.comic_path(conn, :create), comic: @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, comic_path(conn, :show, id)
+      conn = get conn, Routes.comic_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "name" => "some name",
@@ -38,7 +38,7 @@ defmodule BecomicsWeb.ComicControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, comic_path(conn, :create), comic: @invalid_attrs
+      conn = post conn, Routes.comic_path(conn, :create), comic: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -47,10 +47,10 @@ defmodule BecomicsWeb.ComicControllerTest do
     setup [:create_comic]
 
     test "renders comic when data is valid", %{conn: conn, comic: %Comic{id: id} = comic} do
-      conn = put conn, comic_path(conn, :update, comic), comic: @update_attrs
+      conn = put conn, Routes.comic_path(conn, :update, comic), comic: @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get conn, comic_path(conn, :show, id)
+      conn = get conn, Routes.comic_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "name" => "some updated name",
@@ -58,12 +58,12 @@ defmodule BecomicsWeb.ComicControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, comic: comic} do
-      conn = put conn, comic_path(conn, :update, comic), comic: @invalid_attrs
+      conn = put conn, Routes.comic_path(conn, :update, comic), comic: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
 
     test "renders errors when url is invalid", %{conn: conn, comic: comic} do
-      conn = put conn, comic_path(conn, :update, comic), comic: @invalid_attrs_url
+      conn = put conn, Routes.comic_path(conn, :update, comic), comic: @invalid_attrs_url
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -72,10 +72,10 @@ defmodule BecomicsWeb.ComicControllerTest do
     setup [:create_comic]
 
     test "deletes chosen comic", %{conn: conn, comic: comic} do
-      conn = delete conn, comic_path(conn, :delete, comic)
+      conn = delete conn, Routes.comic_path(conn, :delete, comic)
       assert response(conn, 204)
       assert_error_sent 404, fn ->
-        get conn, comic_path(conn, :show, comic)
+        get conn, Routes.comic_path(conn, :show, comic)
       end
     end
   end

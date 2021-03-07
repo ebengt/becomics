@@ -15,7 +15,7 @@ defmodule BecomicsWeb.ComicController do
     with {:ok, %Comic{} = comic} <- Comics.create_comic(comic_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", comic_path(conn, :show, comic))
+      |> put_resp_header("location", BecomicsWeb.Router.Helpers.comic_path(conn, :show, comic))
       |> render("show.json", comic: comic)
     end
   end

@@ -1,19 +1,22 @@
 defmodule Becomics.Application do
-  use Application
-
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
-  def start(_type, _args) do
-    import Supervisor.Spec
+  @moduledoc false
 
-    # Define workers and child supervisors to be supervised
+  use Application
+
+  def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      supervisor(Becomics.Repo, []),
-      # Start the endpoint when the application starts
-      supervisor(BecomicsWeb.Endpoint, []),
-      # Start your own worker by calling: Becomics.Worker.start_link(arg1, arg2, arg3)
-      # worker(Becomics.Worker, [arg1, arg2, arg3]),
+      Becomics.Repo,
+      # Start the Telemetry supervisor
+      BecomicsWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: Becomics.PubSub},
+      # Start the Endpoint (http/https)
+      BecomicsWeb.Endpoint
+      # Start a worker by calling: Becomics.Worker.start_link(arg)
+      # {Becomics.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

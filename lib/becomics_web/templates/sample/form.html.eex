@@ -1,4 +1,4 @@
-<%= form_for @conn, comic_html_path(@conn, :update, @comic.id), fn f -> %>
+<%= form_for @conn, Routes.comic_html_path(@conn, :update, @comic.id), fn f -> %>
   <%= render "error.html", f: f %>
 
   <div class="form-group">

@@ -16,7 +16,7 @@ defmodule BecomicsWeb.ComicHTMLControllerTest do
     setup [:create_comic]
 
     test "change comic table when data is valid", %{conn: conn, comic: %Becomics.Comics.Comic{id: id}} do
-	conn = post conn, comic_html_path(conn, :update, id), url: "http://some updated url"
+	conn = post conn, Routes.comic_html_path(conn, :update, id), url: "http://some updated url"
 	assert conn.status === 200
 	comic = Becomics.Comics.get_comic!(id)
 	assert comic.url === "http://some updated url"

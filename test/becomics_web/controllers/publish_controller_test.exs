@@ -19,17 +19,17 @@ defmodule BecomicsWeb.PublishControllerTest do
 
   describe "index" do
     test "lists all publishes", %{conn: conn} do
-      conn = get conn, publish_path(conn, :index)
+      conn = get conn, BecomicsWeb.Router.Helpers.publish_path(conn, :index)
       assert json_response(conn, 200)["data"] == []
     end
   end
 
   describe "create publish" do
     test "renders publish when data is valid", %{conn: conn} do
-      conn = post conn, publish_path(conn, :create), publish: @create_attrs
+      conn = post conn, Routes.publish_path(conn, :create), publish: @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, publish_path(conn, :show, id)
+      conn = get conn, Routes.publish_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "day" => "some day",
@@ -37,7 +37,7 @@ defmodule BecomicsWeb.PublishControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, publish_path(conn, :create), publish: @invalid_attrs
+      conn = post conn, Routes.publish_path(conn, :create), publish: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -46,10 +46,10 @@ defmodule BecomicsWeb.PublishControllerTest do
     setup [:create_publish]
 
     test "renders publish when data is valid", %{conn: conn, publish: %Publish{id: id} = publish} do
-      conn = put conn, publish_path(conn, :update, publish), publish: @update_attrs
+      conn = put conn, Routes.publish_path(conn, :update, publish), publish: @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get conn, publish_path(conn, :show, id)
+      conn = get conn, Routes.publish_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "day" => "some updated day",
@@ -57,7 +57,7 @@ defmodule BecomicsWeb.PublishControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, publish: publish} do
-      conn = put conn, publish_path(conn, :update, publish), publish: @invalid_attrs
+      conn = put conn, Routes.publish_path(conn, :update, publish), publish: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -66,10 +66,10 @@ defmodule BecomicsWeb.PublishControllerTest do
     setup [:create_publish]
 
     test "deletes chosen publish", %{conn: conn, publish: publish} do
-      conn = delete conn, publish_path(conn, :delete, publish)
+      conn = delete conn, Routes.publish_path(conn, :delete, publish)
       assert response(conn, 204)
       assert_error_sent 404, fn ->
-        get conn, publish_path(conn, :show, publish)
+        get conn, Routes.publish_path(conn, :show, publish)
       end
     end
   end
