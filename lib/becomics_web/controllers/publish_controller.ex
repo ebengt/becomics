@@ -15,7 +15,10 @@ defmodule BecomicsWeb.PublishController do
     with {:ok, %Publish{} = publish} <- Comics.create_publish(publish_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", BecomicsWeb.Router.Helpers.publish_path(conn, :show, publish))
+      |> put_resp_header(
+        "location",
+        BecomicsWeb.Router.Helpers.publish_path(conn, :show, publish)
+      )
       |> render("show.json", publish: publish)
     end
   end
@@ -35,6 +38,7 @@ defmodule BecomicsWeb.PublishController do
 
   def delete(conn, %{"id" => id}) do
     publish = Comics.get_publish!(id)
+
     with {:ok, %Publish{}} <- Comics.delete_publish(publish) do
       send_resp(conn, :no_content, "")
     end

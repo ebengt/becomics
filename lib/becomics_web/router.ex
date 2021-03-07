@@ -18,19 +18,19 @@ defmodule BecomicsWeb.Router do
 
     get "/", PageController, :index
     get "/comics", ComicHTMLController, :index
-    #get "/comics/:day", ComicHTMLController, :show
+    # get "/comics/:day", ComicHTMLController, :show
     # form_for uses post
     post "/comics/:id", ComicHTMLController, :update
     get "/daily", DailyController, :daily
-    #get "/sample/:date", SampleController, :sample
+    # get "/sample/:date", SampleController, :sample
     get "/like/:like", LikeController, :like
   end
 
   # Other scopes may use custom stacks.
   scope "/api", BecomicsWeb do
-     pipe_through :api
-     resources "/comics", ComicController, except: [:new, :edit]
-     resources "/publishes", PublishController, except: [:new, :edit]
+    pipe_through :api
+    resources "/comics", ComicController, except: [:new, :edit]
+    resources "/publishes", PublishController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

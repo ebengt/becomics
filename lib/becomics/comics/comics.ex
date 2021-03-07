@@ -8,21 +8,26 @@ defmodule Becomics.Comics do
 
   alias Becomics.Comics.Comic
 
-	@doc """
-	Return list of comics published on day
-	
-	## Examples
-	
-	iex> select_comics_published_on("Thu")
-	[%Comic{}, ...]
-	"""
-	def select_comics_published_on nil do
-		[]
-	end
-	def select_comics_published_on day do
-		(Repo.all from p in Becomics.Comics.Publish, where: p.day == ^day and not (is_nil p.comic_id), select: p.comic_id)
-		|> (Enum.map &get_comic!/1)
-	end
+  @doc """
+  Return list of comics published on day
+
+  ## Examples
+
+  iex> select_comics_published_on("Thu")
+  [%Comic{}, ...]
+  """
+  def select_comics_published_on(nil) do
+    []
+  end
+
+  def select_comics_published_on(day) do
+    Repo.all(
+      from p in Becomics.Comics.Publish,
+        where: p.day == ^day and not is_nil(p.comic_id),
+        select: p.comic_id
+    )
+    |> Enum.map(&get_comic!/1)
+  end
 
   @doc """
   Returns the list of comics.

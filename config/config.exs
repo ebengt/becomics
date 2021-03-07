@@ -11,7 +11,17 @@ config :becomics,
   ecto_repos: [Becomics.Repo]
 
 # Example of day of week as number to day, in publishes table
-config :becomics, daily_controller: %{1 => "Mon", 2 => "Tue", 3 => "Wed", 4 => "Thu", 5 => "Fri", 6 => "Sat", 7 => "Sun"}
+config :becomics,
+  daily_controller: %{
+    1 => "Mon",
+    2 => "Tue",
+    3 => "Wed",
+    4 => "Thu",
+    5 => "Fri",
+    6 => "Sat",
+    7 => "Sun"
+  }
+
 # What to look for when sampling infrequent publishing, in publishes table
 config :becomics, sample_controller: "infrequent"
 # Overlap 1 so the user will see continuity (last item yesterday is todays first item)

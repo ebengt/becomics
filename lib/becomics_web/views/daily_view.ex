@@ -1,4 +1,3 @@
 defmodule BecomicsWeb.DailyView do
-	use BecomicsWeb, :view
-
+  use BecomicsWeb, :view
 end

@@ -19,7 +19,7 @@ defmodule BecomicsWeb.PublishControllerTest do
 
   describe "index" do
     test "lists all publishes", %{conn: conn} do
-      conn = get conn, BecomicsWeb.Router.Helpers.publish_path(conn, :index)
+      conn = get(conn, BecomicsWeb.Router.Helpers.publish_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
   end
@@ -29,11 +29,13 @@ defmodule BecomicsWeb.PublishControllerTest do
       conn = post conn, Routes.publish_path(conn, :create), publish: @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, Routes.publish_path(conn, :show, id)
+      conn = get(conn, Routes.publish_path(conn, :show, id))
+
       assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "day" => "some day",
-        "comic_id" => nil}
+               "id" => id,
+               "day" => "some day",
+               "comic_id" => nil
+             }
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -49,11 +51,13 @@ defmodule BecomicsWeb.PublishControllerTest do
       conn = put conn, Routes.publish_path(conn, :update, publish), publish: @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get conn, Routes.publish_path(conn, :show, id)
+      conn = get(conn, Routes.publish_path(conn, :show, id))
+
       assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "day" => "some updated day",
-        "comic_id" => nil}
+               "id" => id,
+               "day" => "some updated day",
+               "comic_id" => nil
+             }
     end
 
     test "renders errors when data is invalid", %{conn: conn, publish: publish} do
@@ -66,10 +70,11 @@ defmodule BecomicsWeb.PublishControllerTest do
     setup [:create_publish]
 
     test "deletes chosen publish", %{conn: conn, publish: publish} do
-      conn = delete conn, Routes.publish_path(conn, :delete, publish)
+      conn = delete(conn, Routes.publish_path(conn, :delete, publish))
       assert response(conn, 204)
+
       assert_error_sent 404, fn ->
-        get conn, Routes.publish_path(conn, :show, publish)
+        get(conn, Routes.publish_path(conn, :show, publish))
       end
     end
   end

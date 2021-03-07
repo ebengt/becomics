@@ -35,6 +35,7 @@ defmodule BecomicsWeb.ComicController do
 
   def delete(conn, %{"id" => id}) do
     comic = Comics.get_comic!(id)
+
     with {:ok, %Comic{}} <- Comics.delete_comic(comic) do
       send_resp(conn, :no_content, "")
     end

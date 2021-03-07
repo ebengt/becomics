@@ -11,8 +11,6 @@ defmodule BecomicsWeb.ComicView do
   end
 
   def render("comic.json", %{comic: comic}) do
-    %{id: comic.id,
-      name: comic.name,
-      url: comic.url}
+    %{id: comic.id, name: comic.name, url: comic.url}
   end
 end

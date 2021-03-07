@@ -1,4 +1,3 @@
 defmodule BecomicsWeb.SampleView do
-	use BecomicsWeb, :view
-
+  use BecomicsWeb, :view
 end

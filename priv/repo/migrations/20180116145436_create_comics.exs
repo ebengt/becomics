@@ -9,6 +9,5 @@ defmodule Becomics.Repo.Migrations.CreateComics do
 
       timestamps()
     end
-
   end
 end

@@ -11,8 +11,6 @@ defmodule BecomicsWeb.PublishView do
   end
 
   def render("publish.json", %{publish: publish}) do
-    %{id: publish.id,
-      day: publish.day,
-      comic_id: publish.comic_id}
+    %{id: publish.id, day: publish.day, comic_id: publish.comic_id}
   end
 end

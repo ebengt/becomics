@@ -3,7 +3,6 @@ defmodule Becomics.Comics.Publish do
   import Ecto.Changeset
   alias Becomics.Comics.Publish
 
-
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "publishes" do

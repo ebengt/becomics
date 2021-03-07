@@ -111,9 +111,9 @@ defmodule Becomics.ComicsTest do
       assert {:error, %Ecto.Changeset{}} = Comics.create_publish(@invalid_attrs)
     end
 
-	# Ecto.Changeset.unique_constraint/1 is working on comic_id,
-	# which I have not yet managed to include in the tests.
-	@tag :skip
+    # Ecto.Changeset.unique_constraint/1 is working on comic_id,
+    # which I have not yet managed to include in the tests.
+    @tag :skip
     test "create_publish/1 with same data returns error changeset" do
       publish = publish_fixture()
       assert {:error, %Ecto.Changeset{}} = Comics.create_publish(@valid_attrs)

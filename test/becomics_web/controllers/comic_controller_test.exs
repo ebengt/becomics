@@ -20,7 +20,7 @@ defmodule BecomicsWeb.ComicControllerTest do
 
   describe "index" do
     test "lists all comics", %{conn: conn} do
-      conn = get conn, Routes.comic_path(conn, :index)
+      conn = get(conn, Routes.comic_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
   end
@@ -30,11 +30,13 @@ defmodule BecomicsWeb.ComicControllerTest do
       conn = post conn, Routes.comic_path(conn, :create), comic: @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, Routes.comic_path(conn, :show, id)
+      conn = get(conn, Routes.comic_path(conn, :show, id))
+
       assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some name",
-        "url" => "http://some url"}
+               "id" => id,
+               "name" => "some name",
+               "url" => "http://some url"
+             }
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -50,11 +52,13 @@ defmodule BecomicsWeb.ComicControllerTest do
       conn = put conn, Routes.comic_path(conn, :update, comic), comic: @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get conn, Routes.comic_path(conn, :show, id)
+      conn = get(conn, Routes.comic_path(conn, :show, id))
+
       assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some updated name",
-        "url" => "http://some updated url"}
+               "id" => id,
+               "name" => "some updated name",
+               "url" => "http://some updated url"
+             }
     end
 
     test "renders errors when data is invalid", %{conn: conn, comic: comic} do
@@ -72,10 +76,11 @@ defmodule BecomicsWeb.ComicControllerTest do
     setup [:create_comic]
 
     test "deletes chosen comic", %{conn: conn, comic: comic} do
-      conn = delete conn, Routes.comic_path(conn, :delete, comic)
+      conn = delete(conn, Routes.comic_path(conn, :delete, comic))
       assert response(conn, 204)
+
       assert_error_sent 404, fn ->
-        get conn, Routes.comic_path(conn, :show, comic)
+        get(conn, Routes.comic_path(conn, :show, comic))
       end
     end
   end
