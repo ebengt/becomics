@@ -21,14 +21,14 @@ jobs:
                 name: Check out repository code
                 uses: actions/checkout@v3
             -
-                name: run mix deps.get
-                run: mix deps.get
-            -
                 name: run mix local.hex
                 run: mix local.hex --force
             -
                 name: run mix local.rebar
                 run: mix local.rebar --force
+            -
+                name: run mix deps.get
+                run: mix deps.get
             -
                 name: run mix test
                 run: mix test
