@@ -15,10 +15,14 @@ defmodule BecomicsWeb.DailyController do
     render(conn, "daily.html", comics: comics, samples: samples)
   end
 
-  defp day do
+  # Exported for template
+  def day_of_week_number do
     n = DateTime.utc_now()
-    d = Calendar.ISO.day_of_week(n.year, n.month, n.day)
+    Calendar.ISO.day_of_week(n.year, n.month, n.day)
+  end
+
+  defp day do
     kv = Application.get_env(:becomics, :daily_controller)
-    kv[d]
+    kv[day_of_week_number()]
   end
 end

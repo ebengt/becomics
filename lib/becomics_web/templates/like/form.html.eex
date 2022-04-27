@@ -2,7 +2,7 @@
   <%= render "error.html", f: f %>
 
   <div class="form-group">
-    <label><%= @comic.name %></label>
+    <label><a href="<%= @comic.url %>" target="_ignore"><%= @comic.name %></a></label>
     <%= text_input f, :url, class: "form-control", autocomplete: "off" %>
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>

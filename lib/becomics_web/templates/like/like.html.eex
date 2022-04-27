@@ -1,9 +1,3 @@
-<div class="jumbotron">
-	<%= for c <- @comics do %>
-		<%= render "name_url.html", c: c %>
-	<% end %>
-</div>
-Submit new links
 <%= for c <- @comics do %>
 	<%= render "form.html", conn: 
 	@conn, comic: c %>

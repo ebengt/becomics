@@ -1,3 +1,0 @@
-<br>
-<a href="<%= @c.url %>" target="_ignore"><%= @c.name %></a>
-</br>
