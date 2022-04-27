@@ -16,9 +16,15 @@ jobs:
                     --health-timeout 5s
                     --health-retries 5
         steps:
-        - uses: actions/checkout@v3
-        - run: mix deps.get
-        - run: mix test
-            env:
-                POSTGRES_HOST: postgres
-                POSTGRES_PORT: 5432
+            -
+                name: Check out repository code
+                uses: actions/checkout@v3
+            -
+                name: run mix deps.get
+                run: mix deps.get
+            -
+                name: run mix test
+                run: mix test
+                env:
+                    POSTGRES_HOST: postgres
+                    POSTGRES_PORT: 5432
