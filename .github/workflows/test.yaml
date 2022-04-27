@@ -1,0 +1,9 @@
+name: run-test
+on: [push]
+jobs:
+    mix-test:
+        runs-on: elixir-latest
+        steps:
+        - uses: actions/checkout@v3
+        - run: mix deps.get
+        - run: mix test
