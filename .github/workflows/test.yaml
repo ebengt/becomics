@@ -3,37 +3,27 @@ on: [push]
 jobs:
     mix-test:
         runs-on: ubuntu-latest
-        container:
-            image: elixir:1.12
+        container: node:10.18-jessie
         services:
             postgres:
                 image: postgres
                 env:
                     POSTGRES_PASSWORD: postgres
-                    POSTGRES_PORT: 5433
                 options: >-
                     --health-cmd pg_isready
                     --health-interval 10s
                     --health-timeout 5s
                     --health-retries 5
-                ports:
-                # Maps tcp port 5433 on service container to the host
-                - 5433:5433
         steps:
             -
                 name: Check out repository code
                 uses: actions/checkout@v3
             -
-                name: run mix local.hex
-                run: mix local.hex --force
+                name: Install dependencies
+                run: npm ci
             -
-                name: run mix local.rebar
-                run: mix local.rebar --force
-            -
-                name: run mix deps.get
-                run: mix deps.get
-            -
-                name: run mix test
-                run: mix test
+                name: Connect to PostgreSQL
+                run: node client.js
                 env:
-                    POSTGRES_HOST: localhost
+                    POSTGRES_HOST: postgres
+                    POSTGRES_PORT: 5432
