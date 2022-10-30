@@ -1,4 +1,5 @@
 defmodule BecomicsWeb.ControllersLib do
+  @moduledoc "Common functions for controllers"
   def comics(day) do
     day |> Becomics.Comics.select_comics_published_on() |> comics_sort
   end

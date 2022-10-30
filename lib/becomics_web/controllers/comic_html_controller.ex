@@ -16,7 +16,7 @@ defmodule BecomicsWeb.ComicHTMLController do
   def update(conn, %{"id" => id, "url" => url}) do
     comic = Becomics.Comics.get_comic!(id)
 
-    with {:ok, %Becomics.Comics.Comic{} = comic} =
+    with {:ok, %Becomics.Comics.Comic{} = comic} <-
            Becomics.Comics.update_comic(comic, %{url: url}) do
       render(conn, "update.html", comic: comic)
     end

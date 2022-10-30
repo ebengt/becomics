@@ -1,9 +1,4 @@
-<div class="jumbotron">
-	<%= for c <- @samples do %>
-		<%= render "name_url.html", comic: c %>
-	<% end %>
-</div>
 <%= for c <- @samples do %>
-	<%= render "form.html", conn: 
+	<%= render "form.html", conn:
 	@conn, comic: c %>
 <% end %>

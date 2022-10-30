@@ -1,4 +1,5 @@
 defmodule Becomics.Comics.Publish do
+  @moduledoc "Publish record"
   use Ecto.Schema
   import Ecto.Changeset
   alias Becomics.Comics.Publish
