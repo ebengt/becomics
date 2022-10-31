@@ -1,4 +1,5 @@
 defmodule BecomicsWeb.Telemetry do
+  @moduledoc "Phoenix file"
   use Supervisor
   import Telemetry.Metrics
 

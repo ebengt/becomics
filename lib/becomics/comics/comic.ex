@@ -1,4 +1,5 @@
 defmodule Becomics.Comics.Comic do
+  @moduledoc "Comic record"
   use Ecto.Schema
   #  import Ecto.Changeset
   alias Becomics.Comics.Comic
