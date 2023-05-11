@@ -3,7 +3,7 @@ on: [push]
 jobs:
     mix-test:
         runs-on: ubuntu-latest
-        container: elixir:1.12
+        container: elixir:1.14
         services:
             postgres:
                 image: postgres
