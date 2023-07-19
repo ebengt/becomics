@@ -49,7 +49,7 @@ defmodule BecomicsWeb.SampleControllerTest do
 
     test "select 2 plus 1 extra comics of 10 on third sample" do
       cs = BecomicsWeb.SampleController.test_select(Enum.to_list(0..9), 4, 2, 1)
-     assert cs === [6, 7, 8]
+      assert cs === [6, 7, 8]
     end
 
     test "select 2 comics of 10 on last sample" do
@@ -57,6 +57,7 @@ defmodule BecomicsWeb.SampleControllerTest do
       assert cs === [8, 9]
     end
   end
+
   describe "sample list to get a slice given total number of samples." do
     test "select 1 comics each time, if total is all comcis" do
       cs = BecomicsWeb.SampleController.test_select_samples([1, 1], 2)
