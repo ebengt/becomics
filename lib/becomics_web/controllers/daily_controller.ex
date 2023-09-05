@@ -5,7 +5,7 @@ defmodule BecomicsWeb.DailyController do
     comics = BecomicsWeb.ControllersLib.comics(day())
     sample = Application.get_env(:becomics, :sample_controller)
     overlap = Application.get_env(:becomics, :sample_controller_overlap)
-    n = DateTime.utc_now()
+    n = Date.utc_today()
 
     samples =
       sample
@@ -17,8 +17,9 @@ defmodule BecomicsWeb.DailyController do
 
   # Exported for template
   def day_of_week_number do
-    n = DateTime.utc_now()
-    Calendar.ISO.day_of_week(n.year, n.month, n.day)
+    n = Date.utc_today()
+    {n, 1, 7} = Calendar.ISO.day_of_week(n.year, n.month, n.day, :monday)
+    n
   end
 
   defp day do
