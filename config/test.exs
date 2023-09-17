@@ -19,7 +19,7 @@ config :becomics, Becomics.Repo,
 config :becomics, BecomicsWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "rigW/M3hSg1AryVNX29jT25DFFb98cm8FAK8hRvXwJvYNjzhNEx3UyFwrgRwxXr0",
-  server: false
+  server: true
 
 # In test we don't send emails.
 config :becomics, Becomics.Mailer, adapter: Swoosh.Adapters.Test
