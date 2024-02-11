@@ -1,4 +1,0 @@
-<%= for c <- @comics do %>
-	<%= render "form.html", conn: 
-	@conn, comic: c %>
-<% end %>

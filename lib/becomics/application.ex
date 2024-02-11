@@ -8,12 +8,14 @@ defmodule Becomics.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      Becomics.Repo,
       # Start the Telemetry supervisor
       BecomicsWeb.Telemetry,
+      # Start the Ecto repository
+      Becomics.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Becomics.PubSub},
+      # Start Finch
+      {Finch, name: Becomics.Finch},
       # Start the Endpoint (http/https)
       BecomicsWeb.Endpoint
       # Start a worker by calling: Becomics.Worker.start_link(arg)

@@ -7,7 +7,6 @@ defmodule Becomics.MixProject do
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -31,22 +30,21 @@ defmodule Becomics.MixProject do
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
-  defp deps() do
+  defp deps do
     [
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:gun, "~> 2.0", only: [:dev, :test], runtime: false},
       {:telemetry_metrics_prometheus, "~> 1.1"},
-      {:phoenix, "~> 1.7"},
+      {:phoenix, "~> 1.7.7"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
+      {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.18.16"},
-      {:phoenix_view, "~> 2.0"},
-      {:phoenix_live_dashboard, "~> 0.7.2"},
-      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
+      {:phoenix_live_view, "~> 0.19.0"},
       {:floki, ">= 0.30.0", only: :test},
+      {:phoenix_live_dashboard, "~> 0.8.0"},
+      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
@@ -60,7 +58,11 @@ defmodule Becomics.MixProject do
       {:opentelemetry_cowboy, "~> 0.2"},
       {:opentelemetry_exporter, "~> 1.4"},
       {:opentelemetry_api, "~> 1.2"},
-      {:opentelemetry, "~> 1.3"}
+      {:opentelemetry, "~> 1.3"},
+      # Newer version (opentelemetry_telemetry 1.1.X) has wrong dependencies. telemetry_registry is missing.
+      {:telemetry_registry, "~> 0.3.0"},
+      # Newer version (cowboy 2.11.X) does not work with :plug_cowboy.
+      {:cowboy, "~> 2.10.0"}
     ]
   end
 
@@ -72,11 +74,13 @@ defmodule Becomics.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.build": ["tailwind default", "esbuild default"],
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 end
