@@ -52,17 +52,13 @@ defmodule Becomics.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
+      {:plug_cowboy, "~> 2.7"},
       {:opentelemetry_phoenix, "~> 1.1"},
       {:opentelemetry_ecto, "~> 1.1"},
-      {:opentelemetry_cowboy, "~> 0.2"},
+      {:opentelemetry_cowboy, "~> 0.3"},
       {:opentelemetry_exporter, "~> 1.4"},
       {:opentelemetry_api, "~> 1.2"},
-      {:opentelemetry, "~> 1.3"},
-      # Newer version (opentelemetry_telemetry 1.1.X) has wrong dependencies. telemetry_registry is missing.
-      {:telemetry_registry, "~> 0.3.0"},
-      # Newer version (cowboy 2.11.X) does not work with :plug_cowboy.
-      {:cowboy, "~> 2.10.0"}
+      {:opentelemetry, "~> 1.3"}
     ]
   end
 

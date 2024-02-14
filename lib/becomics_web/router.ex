@@ -18,6 +18,8 @@ defmodule BecomicsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/daily", DailyController, :daily
+    post "/daily/:id", DailyController, :post_from_form
   end
 
   scope "/api", BecomicsWeb do
