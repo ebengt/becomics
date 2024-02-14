@@ -27,7 +27,7 @@
 <%= for c <- @samples do %>
   <br />
   <.form :let={f} for={c} action={~p"/daily/" <> Map.get(c, "id")}>
-    <a href={Map.get(c, "url")} target="_ignore"><%= Map.get(c, "name") %></a>
+    <a href={Map.get(c, "url_for_href")} target="_ignore"><%= Map.get(c, "name") %></a>
     <.input field={f[:url]} />
     <input type="submit" />
   </.form>
