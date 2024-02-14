@@ -10,6 +10,10 @@ defmodule Becomics do
   import Ecto.Query, warn: false
   alias Becomics.Repo
 
+  def comic_like(name) do
+    Ecto.Query.from(c in Becomics.Comic, where: like(c.name, ^name)) |> Becomics.Repo.all()
+  end
+
   @doc """
   Return list of comics published on day
 

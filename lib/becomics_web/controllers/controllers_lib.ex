@@ -8,6 +8,12 @@ defmodule BecomicsWeb.ControllersLib do
     Enum.sort(comics, &first_precedes_second?/2)
   end
 
+  def prepare_to_render_form(maps),
+    do:
+      maps
+      |> Enum.map(&Map.from_struct/1)
+      |> Enum.map(&string_keys/1)
+
   def samples(comics, date, overlap) do
     days_in_month = DateTime.utc_now() |> DateTime.to_date() |> Date.days_in_month()
     zero_based = date - 1
@@ -42,6 +48,15 @@ defmodule BecomicsWeb.ControllersLib do
     List.duplicate(high_per_day, days_with_high_selection) ++
       List.duplicate(low_per_day, total_selection - days_with_high_selection)
   end
+
+  defp string_keys(map), do: Enum.reduce(map, %{}, &string_key_value/2)
+
+  # Existing URL in href.
+  # Avoid URL in form.
+  defp string_key_value({:url, value}, acc),
+    do: acc |> Map.put("url", "") |> Map.put("url_for_href", value)
+
+  defp string_key_value({key, value}, acc), do: Map.put(acc, Atom.to_string(key), value)
 
   if Mix.env() === :test do
     def test_select(comics, total_selection, which), do: select(comics, total_selection, which, 0)

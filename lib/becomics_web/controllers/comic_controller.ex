@@ -37,4 +37,13 @@ defmodule BecomicsWeb.ComicController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def post_from_form(conn, %{"id" => id, "url" => url}) do
+    comic = Becomics.get_comic!(id)
+
+    with {:ok, %Becomics.Comic{} = comic} <-
+           Becomics.update_comic(comic, %{url: url}) do
+      render(conn, :show, comic: comic)
+    end
+  end
 end

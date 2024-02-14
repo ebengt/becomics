@@ -19,12 +19,13 @@ defmodule BecomicsWeb.Router do
 
     get "/", PageController, :home
     get "/daily", DailyController, :daily
-    post "/daily/:id", DailyController, :post_from_form
+    get "/like/:like", LikeController, :like
   end
 
   scope "/api", BecomicsWeb do
     pipe_through :api
     resources "/comic", ComicController, except: [:new, :edit]
+    post "/postcomic/:id", ComicController, :post_from_form
     resources "/publish", PublishController, except: [:new, :edit]
   end
 
