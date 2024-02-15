@@ -1,8 +1,5 @@
 <div>
-  <br />
-  Comics for this day of the week (<%= Kernel.inspect(
-    BecomicsWeb.DailyController.day_of_week_number()
-  ) %>)
+  <br /> Comics for this day of the week (<%= Kernel.inspect(@day_of_week_number) %>)
   according to 'config :becomics, daily_controller: <%= Kernel.inspect(
     Application.get_env(:becomics, :daily_controller)
   ) %>' <br />

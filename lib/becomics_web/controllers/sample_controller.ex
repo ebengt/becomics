@@ -13,19 +13,6 @@ defmodule BecomicsWeb.SampleController do
     render(conn, :sample, comics: comics)
   end
 
-  def sample(conn, %{"date" => date}) do
-    sample = Application.get_env(:becomics, :sample_controller)
-    overlap = Application.get_env(:becomics, :sample_controller_overlap)
-
-    samples =
-      sample
-      |> BecomicsWeb.ControllersLib.comics()
-      |> BecomicsWeb.ControllersLib.samples(String.to_integer(date), overlap)
-      |> BecomicsWeb.ControllersLib.prepare_to_render_form()
-
-    render(conn, :sample, comics: samples)
-  end
-
   defp sane_name(name) do
     name |> String.codepoints() |> Enum.filter(&sane_string/1) |> Enum.join("")
   end
