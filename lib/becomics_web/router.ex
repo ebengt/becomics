@@ -19,7 +19,8 @@ defmodule BecomicsWeb.Router do
 
     get "/", PageController, :home
     get "/daily", DailyController, :daily
-    get "/like/:like", LikeController, :like
+    get "/like/:like", SampleController, :like
+    get "/sample/:date", SampleController, :sample
   end
 
   scope "/api", BecomicsWeb do

@@ -1,4 +1,4 @@
-defmodule BecomicsWeb.LikeController do
+defmodule BecomicsWeb.SampleController do
   use Phoenix.Controller,
     formats: [:html]
 
@@ -10,7 +10,20 @@ defmodule BecomicsWeb.LikeController do
       |> Becomics.comic_like()
       |> BecomicsWeb.ControllersLib.prepare_to_render_form()
 
-    render(conn, :like, comics: comics)
+    render(conn, :sample, comics: comics)
+  end
+
+  def sample(conn, %{"date" => date}) do
+    sample = Application.get_env(:becomics, :sample_controller)
+    overlap = Application.get_env(:becomics, :sample_controller_overlap)
+
+    samples =
+      sample
+      |> BecomicsWeb.ControllersLib.comics()
+      |> BecomicsWeb.ControllersLib.samples(String.to_integer(date), overlap)
+      |> BecomicsWeb.ControllersLib.prepare_to_render_form()
+
+    render(conn, :sample, comics: samples)
   end
 
   defp sane_name(name) do
