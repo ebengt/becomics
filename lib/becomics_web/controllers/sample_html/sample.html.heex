@@ -1,7 +1,7 @@
 <%= for c <- @comics do %>
   <br />
-  <.form :let={f} for={c} action={~p"/api/postcomic/" <> Map.get(c, "id")}>
-    <a href={Map.get(c, "url_for_href")} target="_ignore"><%= Map.get(c, "name") %></a>
+  <.form :let={f} for={c} action={~p[/api/postcomic/#{c["id"]}]}>
+    <a href={c["url_for_href"]} target="_ignore"><%= c["name"] %></a>
     <.input field={f[:url]} />
     <input type="submit" />
   </.form>
