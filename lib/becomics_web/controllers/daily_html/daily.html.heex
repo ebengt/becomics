@@ -1,0 +1,31 @@
+<div>
+  <br /> Comics for this day of the week (<%= Kernel.inspect(@day_of_week_number) %>)
+  according to 'config :becomics, daily_controller: <%= Kernel.inspect(
+    Application.get_env(:becomics, :daily_controller)
+  ) %>' <br />
+</div>
+<div>
+  <br />
+  <%= for c <- @comics do %>
+    <a href={c.url} target="_ignore"><%= c.name %></a>
+  <% end %>
+  <br />
+</div>
+<div>
+  <br />
+  Comics sampled from 'config :becomics, sample_controller: <%= Kernel.inspect(
+    Application.get_env(:becomics, :sample_controller)
+  ) %>'
+  with overlap from 'config :becomics, sample_controller_overlap: <%= Kernel.inspect(
+    Application.get_env(:becomics, :sample_controller_overlap)
+  ) %>'
+  You may submit new links. <br />
+</div>
+<%= for c <- @samples do %>
+  <br />
+  <.form :let={f} for={c} action={~p[/api/postcomic/#{c["id"]}]}>
+    <a href={c["url_for_href"]} target="_ignore"><%= c["name"] %></a>
+    <.input field={f[:url]} />
+    <input type="submit" />
+  </.form>
+<% end %>

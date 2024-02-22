@@ -19,15 +19,15 @@ defmodule BecomicsWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint BecomicsWeb.Endpoint
+
+      use BecomicsWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import BecomicsWeb.ConnCase
-
-      alias BecomicsWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint BecomicsWeb.Endpoint
     end
   end
 

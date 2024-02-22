@@ -11,13 +11,10 @@ where comic_id is 'id' in the reply to the first post.
 
 Phoenix made it very easy to add a basic front end so it is possible to visit [`localhost:4000/daily`](http://localhost:4000/daily) to see todays comics.
 
-The development of the 'daily' interface was done using two other interfaces: [`localhost:4000/comics/:day`](http://localhost:4000/comics/Mon) and [`localhost:4000/sample/:date`](http://localhost:4000/sample/1). They can be enabled by uncommenting them in lib/becomics_web/router.ex
-
 
 To start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
+  * Run `mix setup` to install and setup dependencies
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.

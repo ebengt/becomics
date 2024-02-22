@@ -1,55 +1,31 @@
 defmodule BecomicsWeb.SampleController do
-  use BecomicsWeb, :controller
+  use Phoenix.Controller,
+    formats: [:html]
 
-  def sample(conn, %{"date" => date}) do
-    sample = Application.get_env(:becomics, :sample_controller)
-    overlap = Application.get_env(:becomics, :sample_controller_overlap)
+  def like(conn, %{"like" => name}) do
+    comics =
+      name
+      |> sane_name()
+      |> wildcard_join()
+      |> Becomics.comic_like()
+      |> BecomicsWeb.ControllersLib.prepare_to_render_form()
 
-    samples =
-      sample |> BecomicsWeb.ControllersLib.comics() |> samples(String.to_integer(date), overlap)
-
-    render(conn, "sample.html", samples: samples)
+    render(conn, :sample, comics: comics)
   end
 
-  def samples(comics, date, overlap) do
-    days_in_month = DateTime.utc_now() |> DateTime.to_date() |> Date.days_in_month()
-    zero_based = date - 1
-    select(comics, days_in_month, zero_based, overlap)
+  defp sane_name(name) do
+    name |> String.codepoints() |> Enum.filter(&sane_string/1) |> Enum.join("")
   end
 
-  #
-  # Internal functions
-  #
+  defp sane_string(s) when s >= "a" and s <= "z", do: true
+  defp sane_string(s) when s >= "A" and s <= "Z", do: true
+  defp sane_string(s) when s >= "0" and s <= "9", do: true
+  defp sane_string("-"), do: true
+  defp sane_string(" "), do: true
+  defp sane_string(_), do: false
 
-  defp select([], _total_selection, _which, _overlap), do: []
-
-  defp select(comics, total_selection, which, overlap) do
-    samples_per_day = select_samples(comics, total_selection)
-    select_loop(comics, samples_per_day, which, overlap)
-  end
-
-  defp select_loop(comics, [sample | _], 0, overlap), do: Enum.take(comics, sample + overlap)
-
-  defp select_loop(comics, [sample | t], count_down, overlap),
-    do: select_loop(Enum.drop(comics, sample), t, count_down - 1, overlap)
-
-  defp select_samples(comics, total_selection) do
-    amount = Enum.count(comics)
-    low_per_day = Kernel.div(amount, total_selection)
-    high_per_day = low_per_day + 1
-    low_selection = low_per_day * total_selection
-    days_with_high_selection = amount - low_selection
-
-    List.duplicate(high_per_day, days_with_high_selection) ++
-      List.duplicate(low_per_day, total_selection - days_with_high_selection)
-  end
-
-  if Mix.env() === :test do
-    def test_select(comics, total_selection, which), do: select(comics, total_selection, which, 0)
-
-    def test_select(comics, total_selection, which, overlap),
-      do: select(comics, total_selection, which, overlap)
-
-    def test_select_samples(comics, total_selection), do: select_samples(comics, total_selection)
-  end
+  defp wildcard_join(name), do: wildcard_join(name, String.length(name))
+  defp wildcard_join("", 0), do: "nosuch"
+  defp wildcard_join(name, length) when length < 3, do: name <> "%"
+  defp wildcard_join(name, _length), do: "%" <> name <> "%"
 end

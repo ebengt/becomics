@@ -34,7 +34,7 @@ defmodule BecomicsWeb.MetricsTest do
   end
 
   defp values_for_prometheus() do
-    Becomics.Comics.list_publishes()
+    Becomics.list_publishes()
 
     {host, port} = host_port()
     {:ok, pid} = :gun.open(host, port)

@@ -1,29 +1,40 @@
 defmodule BecomicsWeb.DailyController do
-  use BecomicsWeb, :controller
+  use Phoenix.Controller,
+    formats: [:html]
 
   def daily(conn, _params) do
-    comics = BecomicsWeb.ControllersLib.comics(day())
+    comics_render(conn, Date.utc_today())
+  end
+
+  def date(conn, %{"date" => date}) do
+    today = Date.utc_today()
+    day_number = String.to_integer(date)
+    comics_render(conn, Date.new!(today.year, today.month, day_number))
+  end
+
+  defp comics_render(conn, date) do
+    day = date |> day_of_week_number()
+    comics = day |> day_in_database() |> BecomicsWeb.ControllersLib.comics()
+
     sample = Application.get_env(:becomics, :sample_controller)
     overlap = Application.get_env(:becomics, :sample_controller_overlap)
-    n = Date.utc_today()
 
     samples =
       sample
       |> BecomicsWeb.ControllersLib.comics()
-      |> BecomicsWeb.SampleController.samples(n.day, overlap)
+      |> BecomicsWeb.ControllersLib.samples(date.day, overlap)
+      |> BecomicsWeb.ControllersLib.prepare_to_render_form()
 
-    render(conn, "daily.html", comics: comics, samples: samples)
+    render(conn, :daily, comics: comics, samples: samples, day_of_week_number: day)
   end
 
-  # Exported for template
-  def day_of_week_number do
-    n = Date.utc_today()
-    {n, 1, 7} = Calendar.ISO.day_of_week(n.year, n.month, n.day, :monday)
+  def day_of_week_number(date) do
+    {n, 1, 7} = Calendar.ISO.day_of_week(date.year, date.month, date.day, :monday)
     n
   end
 
-  defp day do
+  defp day_in_database(day_of_week_number) do
     kv = Application.get_env(:becomics, :daily_controller)
-    kv[day_of_week_number()]
+    kv[day_of_week_number]
   end
 end
