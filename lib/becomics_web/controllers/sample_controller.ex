@@ -2,6 +2,21 @@ defmodule BecomicsWeb.SampleController do
   use Phoenix.Controller,
     formats: [:html]
 
+  def days(conn, _) do
+    days = Becomics.publishes_days()
+    render(conn, :days, days: days)
+  end
+
+  def day(conn, %{"day" => day}) do
+    comics =
+      BecomicsWeb.ControllersLib.comics(day)
+      |> publish_id(day)
+      |> BecomicsWeb.ControllersLib.prepare_to_render_form()
+
+    days = Becomics.publishes_days()
+    render(conn, :day, comics: comics, day: day, days: days)
+  end
+
   def like(conn, %{"like" => name}) do
     comics =
       name
@@ -11,6 +26,17 @@ defmodule BecomicsWeb.SampleController do
       |> BecomicsWeb.ControllersLib.prepare_to_render_form()
 
     render(conn, :sample, comics: comics)
+  end
+
+  defp publish_id(comics, day) do
+    f = fn comic -> Becomics.publish_from_comic(comic.id) |> publish_id(comic, day) end
+    Enum.map(comics, f)
+  end
+
+  defp publish_id(publishes, comic, day) do
+    f = fn publish -> publish.day === day end
+    [publish] = Enum.filter(publishes, f)
+    Map.put(comic, :publish_id, publish.id)
   end
 
   defp sane_name(name) do

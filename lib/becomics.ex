@@ -10,9 +10,8 @@ defmodule Becomics do
   import Ecto.Query, warn: false
   alias Becomics.Repo
 
-  def comic_like(name) do
-    Ecto.Query.from(c in Becomics.Comic, where: like(c.name, ^name)) |> Becomics.Repo.all()
-  end
+  def comic_like(name),
+    do: Ecto.Query.from(c in Becomics.Comic, where: like(c.name, ^name)) |> Becomics.Repo.all()
 
   @doc """
   Return list of comics published on day
@@ -128,6 +127,16 @@ defmodule Becomics do
   def change_comic(%Becomics.Comic{} = comic) do
     Becomics.Comic.changeset(comic, %{})
   end
+
+  def publishes_days(),
+    do:
+      Ecto.Query.from(c in Becomics.Publish, distinct: c.day, select: c.day)
+      |> Becomics.Repo.all()
+
+  def publish_from_comic(comic_id),
+    do:
+      Ecto.Query.from(c in Becomics.Publish, where: c.comic_id == ^comic_id)
+      |> Becomics.Repo.all()
 
   @doc """
   Returns the list of publishes.

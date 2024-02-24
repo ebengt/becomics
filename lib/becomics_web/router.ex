@@ -20,6 +20,8 @@ defmodule BecomicsWeb.Router do
     get "/", PageController, :home
     get "/daily", DailyController, :daily
     get "/daily/:date", DailyController, :date
+    get "/days", SampleController, :days
+    get "/days/:day", SampleController, :day
     get "/like/:like", SampleController, :like
   end
 
@@ -28,6 +30,7 @@ defmodule BecomicsWeb.Router do
     resources "/comic", ComicController, except: [:new, :edit]
     post "/postcomic/:id", ComicController, :post_from_form
     resources "/publish", PublishController, except: [:new, :edit]
+    post "/postpublish/:id", PublishController, :post_from_form
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
