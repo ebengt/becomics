@@ -1,5 +1,7 @@
 import Config
 
+config :becomics, telemetry_metrics_prometheus_port: 12345
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
