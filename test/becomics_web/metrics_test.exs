@@ -15,7 +15,7 @@ defmodule BecomicsWeb.MetricsTest do
     {host, _port} = host_port()
     ## Default port for TelemetryMetricsPrometheus.
     {:ok, pid} = :gun.open(host, 9568)
-    {:ok, _} = :gun.await_up(pid)
+    {:ok, _} = :gun.await_up(pid, 10000)
 
     stream = :gun.get(pid, "/metrics")
     {:response, :nofin, status, _headers} = :gun.await(pid, stream)
