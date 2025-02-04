@@ -25,7 +25,12 @@ defmodule BecomicsWeb.DailyController do
       |> BecomicsWeb.ControllersLib.samples(date.day, overlap)
       |> BecomicsWeb.ControllersLib.prepare_to_render_form()
 
-    render(conn, :daily, comics: comics, samples: samples, day_of_week_number: day)
+    render(conn, :daily,
+      comics: comics,
+      samples: samples,
+      day_of_week_number: day,
+      sample_controller: Application.get_env(:becomics, :sample_controller)
+    )
   end
 
   def day_of_week_number(date) do

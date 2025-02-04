@@ -20,9 +20,12 @@ config :becomics,
   }
 
 # What to look for when sampling infrequent publishing, in publishes table
-config :becomics, sample_controller: "infrequent"
+config :becomics, sample_controller: "monthly"
 # Overlap 1 so the user will see continuity (last item yesterday is todays first item)
 config :becomics, sample_controller_overlap: 1
+
+# The default. Will be changed in test.exs
+config :becomics, telemetry_metrics_prometheus_port: 9568
 
 config :becomics,
   ecto_repos: [Becomics.Repo]

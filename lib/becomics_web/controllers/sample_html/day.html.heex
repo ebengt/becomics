@@ -1,0 +1,12 @@
+<div>
+  <br /> Comics published on: <%= @day %> out of: <%= Kernel.inspect(@days) %>'
+  You may submit new day. <br />
+</div>
+<%= for c <- @comics do %>
+  <br />
+  <.form :let={f} for={c} action={~p[/api/postpublish/#{c["publish_id"]}]}>
+    <a href={c["url_for_href"]} target="_ignore"><%= c["name"] %></a>
+    <.input field={f[:day]} />
+    <input type="submit" />
+  </.form>
+<% end %>

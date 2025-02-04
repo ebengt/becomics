@@ -12,9 +12,8 @@ defmodule BecomicsWeb.MetricsTest do
 
   test "Prometheus" do
     values_for_prometheus()
-    {host, _port} = host_port()
-    ## Default port for TelemetryMetricsPrometheus.
-    {:ok, pid} = :gun.open(host, 9568)
+    {host, port} = host_port(:metrics)
+    {:ok, pid} = :gun.open(host, port)
     {:ok, _} = :gun.await_up(pid)
 
     stream = :gun.get(pid, "/metrics")
@@ -27,16 +26,23 @@ defmodule BecomicsWeb.MetricsTest do
     assert Enum.count(String.split(body, "becomics_repo_query", parts: 2)) === 2
   end
 
-  defp host_port() do
+  defp host_port(:api) do
     endpoint = Application.get_env(:becomics, BecomicsWeb.Endpoint)
     http = endpoint[:http]
     {http[:ip], http[:port]}
   end
 
+  defp host_port(:metrics) do
+    endpoint = Application.get_env(:becomics, BecomicsWeb.Endpoint)
+    http = endpoint[:http]
+    port = Application.get_env(:becomics, :telemetry_metrics_prometheus_port)
+    {http[:ip], port}
+  end
+
   defp values_for_prometheus() do
     Becomics.list_publishes()
 
-    {host, port} = host_port()
+    {host, port} = host_port(:api)
     {:ok, pid} = :gun.open(host, port)
     {:ok, _} = :gun.await_up(pid)
     stream = :gun.get(pid, "/")

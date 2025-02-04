@@ -12,10 +12,7 @@
   <br />
 </div>
 <div>
-  <br />
-  Comics sampled from 'config :becomics, sample_controller: <%= Kernel.inspect(
-    Application.get_env(:becomics, :sample_controller)
-  ) %>'
+  <br /> Comics sampled from 'config :becomics, sample_controller: <%= @sample_controller %>'
   with overlap from 'config :becomics, sample_controller_overlap: <%= Kernel.inspect(
     Application.get_env(:becomics, :sample_controller_overlap)
   ) %>'

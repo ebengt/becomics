@@ -37,4 +37,13 @@ defmodule BecomicsWeb.PublishController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def post_from_form(conn, %{"id" => id, "day" => day}) do
+    publish = Becomics.get_publish!(id)
+
+    with {:ok, %Becomics.Publish{} = publish} <-
+           Becomics.update_publish(publish, %{day: day}) do
+      render(conn, :show, publish: publish)
+    end
+  end
 end
