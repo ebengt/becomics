@@ -20,7 +20,7 @@ config :becomics,
   }
 
 # What to look for when sampling infrequent publishing, in publishes table
-config :becomics, sample_controller: "infrequent"
+config :becomics, sample_controller: "monthly"
 # Overlap 1 so the user will see continuity (last item yesterday is todays first item)
 config :becomics, sample_controller_overlap: 1
 
