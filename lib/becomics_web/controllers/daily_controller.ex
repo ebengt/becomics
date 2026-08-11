@@ -6,10 +6,9 @@ defmodule BecomicsWeb.DailyController do
     comics_render(conn, Date.utc_today())
   end
 
-  def date(conn, %{"date" => date}) do
-    today = Date.utc_today()
-    day_number = String.to_integer(date)
-    comics_render(conn, Date.new!(today.year, today.month, day_number))
+  def date(conn, %{"date" => iso8601}) do
+    date = Date.from_iso8601!(iso8601)
+    comics_render(conn, date)
   end
 
   defp comics_render(conn, date) do
